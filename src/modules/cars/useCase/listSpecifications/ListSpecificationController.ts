@@ -1,0 +1,14 @@
+import { Request, Response } from "express";
+import { ListSpecificationUseCase } from "./ListSpecificationUseCase";
+
+
+class ListSpecificationController {
+    constructor(private listSpecificationUseCase: ListSpecificationUseCase) {}
+
+    handle(req: Request, res: Response) {
+        const all = this.listSpecificationUseCase.execute()
+        return res.json(all)
+    }
+}
+
+export { ListSpecificationController }
