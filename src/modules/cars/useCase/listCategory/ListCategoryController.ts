@@ -6,8 +6,8 @@ class ListCategoryController {
 
     constructor(private litCategoryUseCase: ListCategoryUseCase) {}
 
-    handle(req: Request, res: Response): Response {
-        const all = this.litCategoryUseCase.execute();
+    async handle(req: Request, res: Response): Promise<Response> {
+        const all = await this.litCategoryUseCase.execute();
 
         return res.json(all)
     }

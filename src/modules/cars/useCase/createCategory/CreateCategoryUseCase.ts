@@ -1,11 +1,19 @@
 import { CategoriesRepository } from "../../repositories/implementations/CategoriesRepository";
-import { ICreateCategoryDTO } from "../../repositories/ICategoriesRepository";
+import { inject, injectable } from "tsyringe"
 
+interface IRequest {
+    name: string 
+    description: string
+}
+
+@injectable()
 class CreateCategoryUseCase {
-    constructor(private categoriesRepository: CategoriesRepository) {}
+    constructor(
+        @inject("CategoriesRepository")
+        private categoriesRepository: CategoriesRepository) {}
 
-    execute({name, description}: ICreateCategoryDTO) {
-        const categoryAlredyExists = this.categoriesRepository.findByName(name)
+    async execute({name, description}: IRequest): Promise<void> {
+        const categoryAlredyExists = await this.categoriesRepository.findByName(name)
 
         if(categoryAlredyExists) {
             throw new Error("Category Alredy exists!");
